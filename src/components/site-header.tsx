@@ -11,32 +11,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { GraduationCap, LogIn, LogOut, User, Settings, PlusCircle, UserCheck, Users } from 'lucide-react';
+import { GraduationCap, LogIn, LogOut, User, Settings, PlusCircle, UserPlus } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth.tsx';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import type { User as UserType } from '@/types';
 
 
 const SiteHeader = () => {
-  const { user, login, logout } = useAuth();
-
-  const handleLogin = (role: UserType['role']) => {
-    login({
-        name: role === 'organizer' ? 'Event Organizer' : 'Alex Doe',
-        email: role === 'organizer' ? 'organizer@example.com' : 'alex.doe@example.com',
-        role: role,
-    });
-  }
+  const { user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -107,32 +88,20 @@ const SiteHeader = () => {
                 </DropdownMenu>
               </>
             ) : (
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="outline">
+                <div className="flex items-center gap-2">
+                    <Button asChild variant="ghost" size="sm">
+                        <Link href="/login">
                             <LogIn className="mr-2 h-4 w-4" />
                             Login
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Choose Your Role</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Are you here to discover amazing events or to create them? Select your role to continue.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter className="sm:justify-center gap-4 pt-4">
-                             <AlertDialogAction onClick={() => handleLogin('participant')} className="w-full sm:w-auto">
-                                <Users className="mr-2"/>
-                                I'm a Participant
-                            </AlertDialogAction>
-                            <AlertDialogAction onClick={() => handleLogin('organizer')} className="w-full sm:w-auto">
-                                <UserCheck className="mr-2" />
-                                I'm an Organizer
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                        </Link>
+                    </Button>
+                     <Button asChild size="sm">
+                        <Link href="/signup">
+                            <UserPlus className="mr-2 h-4 w-4" />
+                           Sign Up
+                        </Link>
+                    </Button>
+                </div>
             )}
           </nav>
         </div>

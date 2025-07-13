@@ -16,7 +16,10 @@ export type RecommendedEvent = {
 };
 
 export type User = {
-    name: string;
-    email: string;
-    role: 'participant' | 'organizer';
-}
+  name: string;
+  email: string;
+  role: 'participant' | 'organizer';
+  year?: number;
+  rollNo?: string;
+  phone?: string;
+};

@@ -53,14 +53,16 @@ export default function Home() {
                   <Button asChild size="lg">
                       <a href="#upcoming-events">Browse Events</a>
                   </Button>
-                  <Button asChild size="lg" variant="outline">
-                      <a href="#ai-recommendations">Get AI Suggestions</a>
-                  </Button>
+                  {user &&
+                    <Button asChild size="lg" variant="outline">
+                        <a href="#ai-recommendations">Get AI Suggestions</a>
+                    </Button>
+                  }
               </div>
             </div>
           </section>
 
-          <EventRecommendations />
+          {user && <EventRecommendations /> }
           
           <section id="upcoming-events" className="py-16 md:py-24 px-4 bg-background">
             <div className="max-w-7xl mx-auto">
