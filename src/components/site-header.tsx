@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { GraduationCap, LogIn, LogOut, User } from 'lucide-react';
+import { GraduationCap, LogIn, LogOut, User, Settings } from 'lucide-react';
 
 const SiteHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,15 +26,15 @@ const SiteHeader = () => {
           </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
+          <nav className="flex items-center space-x-2">
             {isLoggedIn ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-10 w-10 rounded-full"
                   >
-                    <Avatar className="h-9 w-9">
+                    <Avatar className="h-10 w-10 border-2 border-primary/50">
                       <AvatarImage
                         src="https://placehold.co/100x100.png"
                         alt="User Avatar"
@@ -60,6 +60,10 @@ const SiteHeader = () => {
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
+                   <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => setIsLoggedIn(false)}>
                     <LogOut className="mr-2 h-4 w-4" />
@@ -68,9 +72,9 @@ const SiteHeader = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button onClick={() => setIsLoggedIn(true)}>
+              <Button onClick={() => setIsLoggedIn(true)} variant="outline">
                 <LogIn className="mr-2 h-4 w-4" />
-                Login with Google
+                Login
               </Button>
             )}
           </nav>

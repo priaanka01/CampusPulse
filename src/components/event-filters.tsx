@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { Calendar as CalendarIcon, X } from 'lucide-react';
+import { Calendar as CalendarIcon, Filter, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -26,13 +26,15 @@ const EventFilters: React.FC<EventFiltersProps> = ({
   onClear,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-center mb-8 p-4 rounded-lg bg-card border">
-      <div className="flex-wrap flex gap-2">
-        <span className="text-sm font-semibold self-center mr-2">Categories:</span>
+    <div className="flex flex-col md:flex-row gap-4 items-center mb-8 p-4 rounded-xl bg-card border shadow-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <Filter className="h-5 w-5 mr-2 text-muted-foreground hidden md:block" />
+        <span className="text-sm font-semibold self-center mr-2">Filter by:</span>
         {categories.map((category) => (
           <Button
             key={category}
             variant={selectedCategory === category ? 'default' : 'outline'}
+            size="sm"
             onClick={() =>
               setSelectedCategory(selectedCategory === category ? null : category)
             }
@@ -48,8 +50,9 @@ const EventFilters: React.FC<EventFiltersProps> = ({
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
+              size="sm"
               className={cn(
-                "w-[240px] justify-start text-left font-normal",
+                "w-[240px] justify-start text-left font-normal rounded-full",
                 !selectedDate && "text-muted-foreground"
               )}
             >
@@ -67,7 +70,7 @@ const EventFilters: React.FC<EventFiltersProps> = ({
           </PopoverContent>
         </Popover>
         {(selectedCategory || selectedDate) && (
-          <Button variant="ghost" onClick={onClear} size="icon" aria-label="Clear filters">
+          <Button variant="ghost" onClick={onClear} size="icon" className="rounded-full" aria-label="Clear filters">
             <X className="h-4 w-4" />
           </Button>
         )}
