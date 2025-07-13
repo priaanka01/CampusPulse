@@ -8,9 +8,12 @@ import Link from 'next/link';
 import {
   ArrowLeft,
   Bell,
+  BellOff,
   Calendar,
+  CheckCircle,
   MapPin,
   MessageSquare,
+  XCircle,
 } from 'lucide-react';
 import { events } from '@/lib/events';
 import { Button } from '@/components/ui/button';
@@ -21,13 +24,17 @@ import SiteHeader from '@/components/site-header';
 import Footer from '@/components/footer';
 import { format } from 'date-fns';
 import type { Event } from '@/types';
+import { useAuth } from '@/hooks/use-auth.tsx';
+
 
 export default function EventDetailPage() {
   const params = useParams();
   const eventId = params.id as string;
   const event = events.find((e) => e.id === eventId);
   
+  const { user } = useAuth();
   const [isRegistered, setIsRegistered] = useState(false);
+  const [reminderSet, setReminderSet] = useState(false);
   const [isChatOpen, setChatOpen] = useState(false);
   const { toast } = useToast();
 
@@ -60,11 +67,30 @@ export default function EventDetailPage() {
       description: `You are now registered for ${event.name}.`,
     });
   };
+  
+  const handleUnregister = () => {
+    setIsRegistered(false);
+    setReminderSet(false); // Also remove reminder on unregistering
+    toast({
+      title: 'Unregistered',
+      description: `You are no longer registered for ${event.name}.`,
+      variant: 'destructive',
+    });
+  };
 
   const handleSetReminder = () => {
+    setReminderSet(true);
     toast({
       title: 'Reminder Set!',
       description: `We'll notify you before ${event.name} starts.`,
+    });
+  };
+
+  const handleUnsetReminder = () => {
+    setReminderSet(false);
+    toast({
+      title: 'Reminder Removed',
+      description: `Your reminder for ${event.name} has been removed.`,
     });
   };
 
@@ -80,6 +106,8 @@ export default function EventDetailPage() {
     });
     setChatOpen(false);
   };
+  
+  const canRegister = user && user.role === 'participant';
 
   return (
     <>
@@ -98,7 +126,7 @@ export default function EventDetailPage() {
                 src={event.image}
                 alt={event.name}
                 fill
-                objectFit="cover"
+                style={{objectFit: 'cover'}}
                 data-ai-hint={event.aiHint}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
@@ -145,29 +173,58 @@ export default function EventDetailPage() {
                     </div>
                   </div>
                   <div className="mt-8 space-y-3">
-                    {isRegistered ? (
+                    {canRegister && (
                       <>
-                        <Button
-                          variant="outline"
-                          onClick={handleSetReminder}
-                          className="w-full"
-                          size="lg"
-                        >
-                          <Bell /> Set Reminder
-                        </Button>
-                        <Button
-                          onClick={handleOpenChat}
-                          className="w-full"
-                          size="lg"
-                        >
-                          <MessageSquare /> Chat with Organizer
-                        </Button>
+                        {isRegistered ? (
+                          <>
+                            <div className="flex items-center justify-center text-green-600 font-semibold p-3 bg-green-500/10 rounded-md">
+                                <CheckCircle className="mr-2"/> Registered
+                            </div>
+
+                            <Button
+                              variant={reminderSet ? 'default' : 'outline'}
+                              onClick={reminderSet ? handleUnsetReminder : handleSetReminder}
+                              className="w-full"
+                              size="lg"
+                            >
+                              {reminderSet ? <BellOff /> : <Bell />} {reminderSet ? 'Unset Reminder' : 'Set Reminder'}
+                            </Button>
+                            
+                            <Button
+                              onClick={handleOpenChat}
+                              className="w-full"
+                              size="lg"
+                              variant="secondary"
+                            >
+                              <MessageSquare /> Chat with Organizer
+                            </Button>
+
+                             <Button
+                              variant="destructive"
+                              onClick={handleUnregister}
+                              className="w-full"
+                              size="lg"
+                            >
+                              <XCircle /> Unregister
+                            </Button>
+                          </>
+                        ) : (
+                          <Button onClick={handleRegister} className="w-full" size="lg">
+                            Register Now
+                          </Button>
+                        )}
                       </>
-                    ) : (
-                      <Button onClick={handleRegister} className="w-full" size="lg">
-                        Register Now
-                      </Button>
                     )}
+                     {!user && (
+                        <div className="text-center text-sm text-muted-foreground p-4 bg-secondary/50 rounded-md">
+                            Please log in as a participant to register for events.
+                        </div>
+                     )}
+                     {user && user.role === 'organizer' && (
+                        <div className="text-center text-sm text-muted-foreground p-4 bg-secondary/50 rounded-md">
+                            Organizers cannot register for events.
+                        </div>
+                     )}
                   </div>
                 </Card>
               </div>
@@ -188,5 +245,5 @@ export default function EventDetailPage() {
 
 // Add a placeholder card component to avoid breaking imports
 const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={className} {...props} />
+  <div className={cn("rounded-xl border bg-card text-card-foreground shadow", className)} {...props} />
 );

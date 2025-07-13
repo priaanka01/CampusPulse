@@ -26,10 +26,10 @@ const EventFilters: React.FC<EventFiltersProps> = ({
   onClear,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-center mb-8 p-4 rounded-xl bg-card border shadow-sm">
+    <div className="flex flex-col md:flex-row gap-4 items-center">
       <div className="flex flex-wrap items-center gap-2">
         <Filter className="h-5 w-5 mr-2 text-muted-foreground hidden md:block" />
-        <span className="text-sm font-semibold self-center mr-2">Filter by:</span>
+        <span className="text-sm font-semibold self-center mr-2 hidden lg:block">Filter by:</span>
         {categories.map((category) => (
           <Button
             key={category}
@@ -44,7 +44,7 @@ const EventFilters: React.FC<EventFiltersProps> = ({
           </Button>
         ))}
       </div>
-      <div className="flex-grow" />
+      <div className="flex-grow md:flex-grow-0" />
       <div className="flex gap-2 items-center">
          <Popover>
           <PopoverTrigger asChild>

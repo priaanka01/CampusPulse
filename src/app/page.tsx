@@ -8,6 +8,9 @@ import EventRecommendations from '@/components/event-recommendations';
 import { events as allEvents } from '@/lib/events';
 import type { Event } from '@/types';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/use-auth.tsx';
+import { PlusCircle } from 'lucide-react';
+import Link from 'next/link';
 
 const categories = [...new Set(allEvents.map((event) => event.category))];
 
@@ -15,6 +18,8 @@ export default function Home() {
   const [filteredEvents, setFilteredEvents] = useState<Event[]>(allEvents);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const { user } = useAuth();
+
 
   useEffect(() => {
     let events = allEvents;
@@ -65,17 +70,27 @@ export default function Home() {
                   </h2>
                   <p className="mt-2 text-lg text-muted-foreground">Stay in the loop with what's happening on campus.</p>
               </div>
-              <EventFilters
-                categories={categories}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                onClear={() => {
-                  setSelectedCategory(null);
-                  setSelectedDate(undefined);
-                }}
-              />
+              <div className="flex justify-between items-center mb-4">
+                <EventFilters
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                    selectedDate={selectedDate}
+                    setSelectedDate={setSelectedDate}
+                    onClear={() => {
+                    setSelectedCategory(null);
+                    setSelectedDate(undefined);
+                    }}
+                />
+                 {user?.role === 'organizer' && (
+                    <Button asChild>
+                        <Link href="/create-event">
+                            <PlusCircle className="mr-2 h-4 w-4" />
+                            Create Event
+                        </Link>
+                    </Button>
+                )}
+              </div>
               {filteredEvents.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                   {filteredEvents.map((event) => (

@@ -14,3 +14,9 @@ export type RecommendedEvent = {
   eventDescription: string;
   relevanceScore: number;
 };
+
+export type User = {
+    name: string;
+    email: string;
+    role: 'participant' | 'organizer';
+}
