@@ -8,8 +8,8 @@ export const events: Event[] = [
     location: 'Grand Auditorium',
     description: 'A gathering of the brightest minds in technology and innovation. Keynotes, panels, and networking opportunities.',
     category: 'Tech',
-    image: 'https://placehold.co/600x400/1e40af/ffffff.png',
-    aiHint: 'technology conference',
+    image: 'https://placehold.co/400x600/1e3a8a/ffffff.png',
+    aiHint: 'tech conference',
   },
   {
     id: '2',
@@ -18,7 +18,7 @@ export const events: Event[] = [
     location: 'Campus Green',
     description: 'An outdoor music festival featuring local bands and student performers. Food trucks and fun for everyone.',
     category: 'Music',
-    image: 'https://placehold.co/600x400/9333ea/ffffff.png',
+    image: 'https://placehold.co/400x600/c026d3/ffffff.png',
     aiHint: 'music festival',
   },
   {
@@ -28,8 +28,8 @@ export const events: Event[] = [
     location: 'Innovation Hub',
     description: 'Watch as student entrepreneurs pitch their business ideas to a panel of venture capitalists.',
     category: 'Career',
-    image: 'https://placehold.co/600x400/ea580c/ffffff.png',
-    aiHint: 'business startup',
+    image: 'https://placehold.co/400x600/f97316/ffffff.png',
+    aiHint: 'startup pitch',
   },
   {
     id: '4',
@@ -38,7 +38,7 @@ export const events: Event[] = [
     location: 'Fine Arts Gallery',
     description: 'Explore a curated collection of abstract art from renowned and emerging artists.',
     category: 'Art',
-    image: 'https://placehold.co/600x400/c026d3/ffffff.png',
+    image: 'https://placehold.co/400x600/8b5cf6/ffffff.png',
     aiHint: 'art gallery',
   },
   {
@@ -48,7 +48,7 @@ export const events: Event[] = [
     location: 'University Arena',
     description: 'Cheer on the home team as they compete for the championship title. Go Tigers!',
     category: 'Sports',
-    image: 'https://placehold.co/600x400/be123c/ffffff.png',
+    image: 'https://placehold.co/400x600/dc2626/ffffff.png',
     aiHint: 'basketball game',
   },
   {
@@ -58,7 +58,7 @@ export const events: Event[] = [
     location: 'Exhibition Hall',
     description: 'Connect with top employers from various industries. Bring your resume and dress to impress.',
     category: 'Career',
-    image: 'https://placehold.co/600x400/059669/ffffff.png',
+    image: 'https://placehold.co/400x600/16a34a/ffffff.png',
     aiHint: 'job fair',
   },
    {
@@ -68,7 +68,7 @@ export const events: Event[] = [
     location: 'Computer Science Bldg, Rm 101',
     description: 'A hands-on workshop on implementing machine learning models for real-world applications.',
     category: 'Tech',
-    image: 'https://placehold.co/600x400/1d4ed8/ffffff.png',
+    image: 'https://placehold.co/400x600/3b82f6/ffffff.png',
     aiHint: 'ai workshop',
   },
   {
@@ -78,7 +78,7 @@ export const events: Event[] = [
     location: 'Performing Arts Center',
     description: 'An evening of smooth jazz performed by the university\'s award-winning jazz ensemble.',
     category: 'Music',
-    image: 'https://placehold.co/600x400/7c3aed/ffffff.png',
+    image: 'https://placehold.co/400x600/6d28d9/ffffff.png',
     aiHint: 'jazz concert',
   },
 ];
