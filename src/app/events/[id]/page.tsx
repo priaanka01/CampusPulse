@@ -25,6 +25,7 @@ import Footer from '@/components/footer';
 import { format } from 'date-fns';
 import type { Event } from '@/types';
 import { useAuth } from '@/hooks/use-auth.tsx';
+import { cn } from '@/lib/utils';
 
 
 export default function EventDetailPage() {
