@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getRecommendations, type RecommendationState } from '@/app/actions';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -30,7 +31,7 @@ const EventRecommendations = () => {
     message: '',
     recommendations: null,
   };
-  const [state, formAction] = useFormState(getRecommendations, initialState);
+  const [state, formAction] = useActionState(getRecommendations, initialState);
 
   return (
     <section id="ai-recommendations" className="bg-secondary/30 py-16 md:py-24 px-4">
