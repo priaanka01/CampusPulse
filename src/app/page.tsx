@@ -8,8 +8,6 @@ import EventRecommendations from '@/components/event-recommendations';
 import { events as allEvents } from '@/lib/events';
 import type { Event } from '@/types';
 import { Button } from '@/components/ui/button';
-import { useToast } from "@/hooks/use-toast"
-import ChatDialog from '@/components/chat-dialog';
 
 const categories = [...new Set(allEvents.map((event) => event.category))];
 
@@ -17,10 +15,6 @@ export default function Home() {
   const [filteredEvents, setFilteredEvents] = useState<Event[]>(allEvents);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [registeredEvents, setRegisteredEvents] = useState<Set<string>>(new Set());
-  const [isChatOpen, setChatOpen] = useState(false);
-  const [chatEvent, setChatEvent] = useState<Event | null>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     let events = allEvents;
@@ -35,34 +29,6 @@ export default function Home() {
     setFilteredEvents(events);
   }, [selectedCategory, selectedDate]);
 
-  const handleRegister = (eventId: string) => {
-    setRegisteredEvents(prev => new Set(prev).add(eventId));
-    toast({
-      title: "Successfully Registered!",
-      description: "You can now set a reminder or contact the organizer.",
-    })
-  };
-
-  const handleSetReminder = (eventName: string) => {
-    toast({
-      title: "Reminder Set!",
-      description: `We'll notify you before ${eventName} starts.`,
-    });
-  };
-
-  const handleOpenChat = (event: Event) => {
-    setChatEvent(event);
-    setChatOpen(true);
-  };
-  
-  const handleSendMessage = (message: string) => {
-    console.log(`Sending message about ${chatEvent?.name}: ${message}`);
-    toast({
-        title: "Message Sent!",
-        description: `Your query about "${chatEvent?.name}" has been sent to the organizer.`,
-    });
-    setChatOpen(false);
-  };
 
   return (
     <>
@@ -116,10 +82,6 @@ export default function Home() {
                     <EventCard
                       key={event.id}
                       event={event}
-                      isRegistered={registeredEvents.has(event.id)}
-                      onRegister={handleRegister}
-                      onSetReminder={handleSetReminder}
-                      onChat={handleOpenChat}
                     />
                   ))}
                 </div>
@@ -134,14 +96,6 @@ export default function Home() {
         </main>
         <Footer />
       </div>
-      {chatEvent && (
-         <ChatDialog
-          isOpen={isChatOpen}
-          onOpenChange={setChatOpen}
-          event={chatEvent}
-          onSendMessage={handleSendMessage}
-        />
-      )}
     </>
   );
 }
